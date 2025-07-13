@@ -1,0 +1,61 @@
+<div class="complaint-container">
+  <h2>Tambahkan Laporan Keluhan</h2>
+
+  <form [formGroup]="complaintForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="title">Judul Laporan Keluhan (wajib)</label>
+      <input
+        type="text"
+        id="title"
+        formControlName="title"
+        placeholder="Masukkan judul keluhan"
+        maxlength="30"
+      >
+      <div class="character-counter">{{ complaintForm.get('title')?.value?.length || 0 }}/30</div>
+      <div *ngIf="complaintForm.get('title')?.invalid && complaintForm.get('title')?.touched" class="error-message">
+        Judul keluhan wajib diisi
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Deskripsikan keluhan (Max 250 huruf)</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        placeholder="Jelaskan keluhan Anda secara detail"
+        maxlength="250"
+        rows="4"
+      ></textarea>
+      <div class="character-counter">{{ complaintForm.get('description')?.value?.length || 0 }}/250</div>
+    </div>
+
+    <div class="form-group">
+      <label for="photo">Upload foto keluhan</label>
+      <div class="file-upload-container">
+        <input
+          type="file"
+          id="photo"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+        >
+        <label for="photo" class="file-upload-label">
+          <span *ngIf="!selectedFile">Pilih File</span>
+          <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
+        </label>
+      </div>
+      <div *ngIf="previewUrl" class="image-preview">
+        <img [src]="previewUrl" alt="Preview">
+        <button type="button" class="remove-btn" (click)="removeImage()">×</button>
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="submit-btn"
+      [disabled]="complaintForm.invalid || isSubmitting"
+    >
+      <span *ngIf="!isSubmitting">Kirim Keluhan</span>
+      <span *ngIf="isSubmitting">Mengirim...</span>
+    </button>
+  </form>
+</div>

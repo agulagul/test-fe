@@ -1,0 +1,257 @@
+<div class="registration-container">
+
+  <div class="register-header">
+    <button class="gradient-button" (click)="goBack()">
+      <span class="button-text">Kembali</span>
+    </button>
+    <h1 class="registration-title">Registrasi Unit</h1>
+  </div>
+
+  <div class="registration-card">
+
+    <form [formGroup]="unitForm" (ngSubmit)="onSubmit()">
+      <div class="form-section">
+        <h2 class="section-title">Informasi Unit</h2>
+
+        <!-- <div class="form-group">
+          <label for="property_id">ID Properti</label>
+          <input id="property_id" type="number" formControlName="property_id" placeholder="Masukkan ID properti">
+        </div> -->
+        <div class="form-group">
+          <label for="unit_name">Nama Unit</label>
+          <input id="unit_name" type="text" formControlName="unit_name" placeholder="Masukkan nama unit">
+        </div>
+        <div class="form-group">
+          <label for="price">Harga</label>
+          <input id="price" type="number" formControlName="price" placeholder="Masukkan harga">
+        </div>
+        <div class="form-group">
+          <label for="unit_width">Lebar Unit (m)</label>
+          <input id="unit_width" type="number" formControlName="unit_width" placeholder="Masukkan lebar unit">
+        </div>
+        <div class="form-group">
+          <label for="unit_height">Panjang Unit (m)
+          </label>
+          <input id="unit_height" type="number" formControlName="unit_height" placeholder="Masukkan panjang unit">
+        </div>
+        <div class="form-group">
+          <label for="unit_capacity">Kapasitas Unit</label>
+          <input id="unit_capacity" type="number" formControlName="unit_capacity" placeholder="Masukkan kapasitas unit">
+        </div>
+        <div class="form-group">
+          <label for="promo_price">Harga Promo</label>
+          <input id="promo_price" type="number" formControlName="promo_price" placeholder="Masukkan harga promo (opsional)">
+        </div>
+        <div class="form-group">
+          <label for="deposit_fee">Deposit</label>
+          <input id="deposit_fee" type="number" formControlName="deposit_fee" placeholder="Masukkan deposit (opsional)">
+        </div>
+        <div class="form-group">
+          <label for="description">Deskripsi</label>
+          <textarea id="description" formControlName="description" rows="4" placeholder="Masukkan deskripsi unit"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="available">Tersedia</label>
+          <select id="available" formControlName="available">
+            <option [value]="true">Ya</option>
+            <option [value]="false">Tidak</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- Section Fasilitas -->
+      <div class="form-section">
+        <h2 class="section-title">Fasilitas Unit</h2>
+        <div class="facility-list-section">
+          <div *ngFor="let category of facilityCategories | keyvalue">
+            <h3 class="facility-category">{{category.key}}</h3>
+            <div class="facility-list-row">
+              <button type="button" class="facility-add-btn" *ngFor="let fac of category.value" (click)="onFacilityAdd(fac)" [disabled]="isFacilitySelected(fac.id)">
+                {{fac.facility_name}}
+              </button>
+            </div>
+          </div>
+          <div formArrayName="facilities" class="facility-selected-list">
+            <div *ngIf="facilities.controls.length === 0" class="facility-empty">
+              <em>Belum ada fasilitas dipilih.</em>
+            </div>
+            <div *ngFor="let facilityCtrl of facilities.controls; let i = index" [formGroupName]="i" class="facility-row facility-selected-row">
+              <span class="facility-name">{{facilityCtrl.value.facility_name}}</span>
+              <input type="number" min="1" class="facility-qty-dialog" placeholder="Qty"
+                formControlName="quantity" />
+              <input type="text" class="facility-notes-dialog" placeholder="Catatan"
+                formControlName="notes" />
+              <button type="button" class="remove-facility-btn" (click)="removeFacility(i)">
+                <span>&#10006;</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Upload Foto Unit -->
+      <div class="form-section">
+        <h2 class="section-title">Foto Unit</h2>
+        <input type="file" multiple accept="image/*" (change)="onFilesSelected($event)" />
+        <div class="image-preview-list">
+          <div class="image-preview-item" *ngFor="let img of imagePreviews; let i = index">
+            <img [src]="img" alt="Preview" class="image-preview" />
+            <button type="button" class="remove-img-btn" (click)="removeImage(i)">Hapus</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="cancel-btn" (click)="onCancel()">Cancel</button>
+        <button type="submit" class="submit-btn" [disabled]="unitForm.invalid">
+          Register Unit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+.facility-dialog-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0;
+  padding: 10px 0 10px 0;
+  border-bottom: 1px solid #f0f4fa;
+  transition: background 0.2s;
+}
+.facility-dialog-row-hover:hover {
+  background: #f8fafc;
+}
+.facility-dialog-left {
+  display: flex;
+  align-items: center;
+  min-width: 180px;
+}
+.facility-dialog-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  justify-content: flex-end;
+}
+.facility-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+}
+.facility-qty-dialog {
+  width: 54px;
+  padding: 4px 6px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: 1px solid #dbeafe;
+  text-align: center;
+  margin-right: 4px;
+}
+.facility-notes-dialog {
+  width: 140px;
+  padding: 4px 8px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: 1px solid #dbeafe;
+}
+.facility-list-section {
+  max-height: none;
+  overflow-y: visible;
+  padding: 0 8px 16px 8px;
+}
+.facility-category {
+  margin-top: 18px;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.facility-list-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+  overflow-x: visible;
+  overflow-y: visible;
+  padding-bottom: 4px;
+}
+.facility-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 8px 0;
+}
+.facility-add-btn {
+  background: #f0f4fa;
+  border: 1px solid #dbeafe;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 15px;
+  cursor: pointer;
+  color: #4f5d75;
+  transition: background 0.2s;
+}
+.facility-add-btn:disabled {
+  background: #e0e7ef;
+  color: #b0b7c3;
+  cursor: not-allowed;
+}
+.remove-facility-btn {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.facility-selected-list {
+  margin-top: 12px;
+  margin-bottom: 8px;
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 10px 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.facility-selected-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #e0e7ef;
+  padding: 10px 0;
+  flex-wrap: wrap;
+}
+.facility-name {
+  min-width: 120px;
+  max-width: 220px;
+  font-weight: 500;
+  color: #2d3a4a;
+  word-break: break-word;
+  white-space: normal;
+  flex: 1 1 220px;
+}
+.facility-qty-dialog {
+  width: 54px;
+  min-width: 54px;
+  flex: 0 0 54px;
+}
+.facility-notes-dialog {
+  width: 140px;
+  min-width: 100px;
+  flex: 1 1 140px;
+}
+.remove-facility-btn {
+  flex: 0 0 auto;
+}
+.facility-empty {
+  color: #b0b7c3;
+  font-size: 15px;
+  text-align: center;
+  padding: 12px 0;
+}
+</style>

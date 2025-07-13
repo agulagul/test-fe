@@ -1,0 +1,286 @@
+
+:root {
+  --main-bg: #f7f9fc;
+  --panel-bg: #1e3a5f;
+  --text-light: #ffffff;
+  --highlight-yellow: #facc15;
+  --card-bg: #2c4a72;
+  --font-dark: #111827;
+}
+
+.image-container-complete{
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1rem;
+  background-color: var(--main-bg);
+  font-family: 'Segoe UI', sans-serif;
+  color: var(--font-dark);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.image-grid img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.info {
+  margin-top: 1.5rem;
+  background-color: var(--panel-bg);
+  padding: 1.5rem;
+  border-radius: 10px;
+  color: var(--text-light);
+}
+
+.price {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--highlight-yellow);
+}
+
+.overall-grid{
+  border-radius: 15px;
+  background-color: #1e3a5f;
+  color: whitesmoke;
+}
+
+.waImg{
+  width: 15px;
+}
+
+.share-button{
+  background-color: #1e3a5f;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  margin: 1rem 1rem 1rem 0;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 6px;
+  color: whitesmoke;
+}
+
+.book-button {
+  background-color: #facc15;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  margin: 1rem 0;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 6px;
+  color: black;
+}
+
+.details-grid {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.details-grid div p{
+  margin: 0;
+}
+
+.details-grid div h4{
+  margin-bottom: 5px;
+}
+
+.facilities p{
+  margin: 0;
+}
+
+.facilities div h4{
+  padding-bottom: 0;
+}
+
+.firstGrid{
+  border-right: 3px solid #facc15;
+}
+
+.details-grid div {
+  flex: 1;
+  min-width: 200px;
+  padding: 1.5rem
+}
+
+.facilities {
+  /* padding-left: 1.5rem;
+  padding-right: 1.5rem; */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  border-top: 3px solid #facc15;
+  border-bottom: 3px solid #facc15;
+}
+
+.facilities div {
+  background-color: #425D77;
+  border-radius: 10px;
+  margin: 1rem;
+  padding: 0.5rem;
+}
+
+.facilities h4 {
+  color: var(--highlight-yellow);
+  margin-bottom: 0.5rem;
+}
+
+.facilities ul {
+  padding-left: 1rem;
+}
+
+.contacts {
+  background-color: var(--card-bg);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.contacts h4 {
+  color: var(--highlight-yellow);
+}
+
+.contact-item {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 50%;
+}
+
+.contact-list{
+  display: flex;
+  flex-direction: row;
+}
+
+.gallery-container {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.gallery-img {
+  width: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  grid-row: 1;
+}
+
+.gallery-img:hover {
+  transform: scale(1.03);
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+}
+
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  margin: auto;
+}
+
+.carousel-wrapper {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  box-sizing: border-box;
+}
+
+.carousel-slide img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  height: 600px;
+  border-radius: 8px;
+}
+
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  padding: 0 10px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+@media (max-width: 850px) {
+  .details-grid {
+    flex-direction: column;
+  }
+
+  .image-container-complete{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .firstGrid{
+    border: none;
+  }
+
+  .carousel-slide img {
+    height: 400px;
+  }
+
+}

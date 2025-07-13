@@ -1,0 +1,53 @@
+<div class="landingPage">
+  <div class="flex-row-center">
+    <button class="gradient-button" (click)="goBack()">
+      <span class="button-text">Kembali</span>
+    </button>
+    <h2 class="title">Daftar Properti Anda</h2>
+    <div class="searchHeader">
+      <div class="InputContainer">
+        <input
+          placeholder="Penelusuran"
+          id="input"
+          class="input"
+          name="text"
+          type="text"
+        />
+        <label class="labelforsearch" for="input">
+          <svg class="searchIcon" viewBox="0 0 512 512">
+            <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"></path>
+          </svg>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-column-center">
+    <ng-container *ngIf="PropListData.length > 0; else emptyState">
+      <div class="property-list-grid">
+        <div class="property-card" *ngFor="let item of PropListData">
+          <div class="property-image-wrapper">
+            <img class="property-image" [src]="item.propimage" alt="kost-image" />
+          </div>
+          <div class="property-info">
+            <h2 class="property-title">{{item.name}}</h2>
+            <span class="badge-type">{{item.type}}</span>
+            <div class="location">{{item.location}}</div>
+            <div class="price" *ngIf="item.price && item.price > 0">Rp {{item.price | number}}</div>
+            <div class="ratings">
+              <svg height="20" width="20" viewBox="0 0 24 24"><g><path fill="#e67e22" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></g></svg>
+              <span>{{item.rating}}</span>
+            </div>
+            <div class="property-actions">
+              <button class="btn-detail" (click)="goToDetail(item.id)">Lihat Detail</button>
+              <button class="btn-edit" (click)="goToEdit(item.id)">Ubah Data</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #emptyState>
+      <div class="empty-message">Belum ada properti yang terdaftar.</div>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+.edit-property-container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  padding: 32px 24px;
+}
+.edit-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.edit-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.edit-card {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 24px 18px;
+}
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+input, select, textarea {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 1rem;
+}
+input[type="file"] {
+  padding: 0;
+}
+.image-preview img {
+  max-width: 200px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+.gradient-button {
+  background: linear-gradient(90deg, #4f8cff 0%, #1e88e5 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 18px;
+  transition: background 0.2s;
+}
+.gradient-button:disabled {
+  background: #b0b0b0;
+  cursor: not-allowed;
+}

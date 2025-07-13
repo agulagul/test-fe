@@ -1,0 +1,118 @@
+<div class="statistics-container">
+  <div class="statistics-header">
+    <h1>Statistik</h1>
+
+    <div class="action-buttons">
+      <button mat-raised-button class="filter-button" (click)="openFilterDialog()">
+        <mat-icon>filter_list</mat-icon>
+        Terapkan Filter
+      </button>
+
+      <button *ngIf="tableData && tableData.length" mat-raised-button class="download-button" (click)="downloadTableAsPDF()">
+        <mat-icon>download</mat-icon>
+        Download
+      </button>
+    </div>
+    <button mat-raised-button color="primary" class="add-financial-button" (click)="openAddFinancialDialog()">
+      <mat-icon>add</mat-icon>
+      Tambah Data Keuangan
+    </button>
+  </div>
+  <!-- Filter dialog (will be shown when filter button is clicked) -->
+  <div class="filter-dialog" *ngIf="showFilterDialog">
+    <div class="filter-content">
+      <h3>Filter Options</h3>
+
+      <div class="filter-section">
+        <mat-radio-group [(ngModel)]="filterType">
+          <mat-radio-button value="year">By Tahun</mat-radio-button>
+          <mat-radio-button value="month">By Bulan</mat-radio-button>
+          <mat-radio-button value="date">By Tanggal</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="filter-section" *ngIf="filterType === 'year'">
+        <mat-form-field appearance="outline">
+          <mat-label>Tahun</mat-label>
+          <input matInput type="number" [(ngModel)]="filterYear" placeholder="Contoh: 2025">
+        </mat-form-field>
+      </div>
+      <div class="filter-section" *ngIf="filterType === 'month'">
+        <div class="filter-month-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Tahun</mat-label>
+            <input matInput type="number" [(ngModel)]="filterYear" placeholder="Contoh: 2025">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Bulan</mat-label>
+            <mat-select [(ngModel)]="filterMonth">
+              <mat-option *ngFor="let m of [1,2,3,4,5,6,7,8,9,10,11,12]" [value]="m">{{m}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="filter-section" *ngIf="filterType === 'date'">
+        <div class="filter-month-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Tahun</mat-label>
+            <input matInput type="number" [(ngModel)]="filterYear" placeholder="Contoh: 2025">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Bulan</mat-label>
+            <mat-select [(ngModel)]="filterMonth">
+              <mat-option *ngFor="let m of [1,2,3,4,5,6,7,8,9,10,11,12]" [value]="m">{{m}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Tanggal</mat-label>
+            <mat-select [(ngModel)]="filterDay">
+              <mat-option *ngFor="let d of availableDays" [value]="d">{{d}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="filter-section">
+        <mat-form-field appearance="outline">
+          <mat-label>Pilih Properti</mat-label>
+          <mat-select [(ngModel)]="selectedPropertyId">
+            <mat-option *ngFor="let property of properties" [value]="property.id">
+              {{property.property_name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="filter-actions">
+        <button mat-button (click)="applyFilters()">Apply</button>
+        <button mat-button (click)="closeFilterDialog()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="infoMessage" class="info-message">
+    {{ infoMessage }}
+  </div>
+
+  <div class="statistics-table" *ngIf="tableData && tableData.length">
+    <table mat-table [dataSource]="tableData" class="mat-elevation-z2">
+      <ng-container *ngFor="let col of tableColumns" [matColumnDef]="col">
+        <th mat-header-cell *matHeaderCellDef>{{ col }}</th>
+        <td mat-cell *matCellDef="let row">{{ row[col] }}</td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Aksi</th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button color="primary" (click)="onEditReport(row)"><mat-icon>edit</mat-icon></button>
+          <button mat-icon-button color="warn" (click)="onDeleteReport(row)"><mat-icon>delete</mat-icon></button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="tableColumns.concat(['actions'])"></tr>
+      <tr mat-row *matRowDef="let row; columns: tableColumns.concat(['actions']);"></tr>
+    </table>
+  </div>
+
+  <div class="statistics-content">
+    <canvas #myChartCanvas id="MyChart" *ngIf="chartVisible"></canvas>
+    <canvas #pieChartCanvas id="PieChart" *ngIf="chartVisible"></canvas>
+  </div>
+</div>

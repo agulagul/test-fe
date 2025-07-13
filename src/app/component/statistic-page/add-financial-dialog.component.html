@@ -1,0 +1,64 @@
+<h2>Tambah Laporan Keuangan</h2>
+<form [formGroup]="financialForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Pilih Properti</mat-label>
+    <mat-select formControlName="property_id" (selectionChange)="onPropertyChange($event.value)">
+      <mat-option *ngFor="let property of properties" [value]="property.id">
+        {{property.property_name}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="financialForm.get('property_id')?.hasError('required')">
+      Properti wajib dipilih
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Pilih Unit</mat-label>
+    <mat-select formControlName="unit_id">
+      <mat-option *ngFor="let unit of units" [value]="unit.id">
+        {{unit.unit_name}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="financialForm.get('unit_id')?.hasError('required')">
+      Unit wajib dipilih
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nominal Pemasukan</mat-label>
+    <input matInput type="number" formControlName="nominalPemasukan" placeholder="0" min="0">
+    <mat-error *ngIf="financialForm.get('nominalPemasukan')?.hasError('required')">
+      Nominal pemasukan wajib diisi
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nominal Pengeluaran</mat-label>
+    <input matInput type="number" formControlName="nominalPengeluaran" placeholder="0" min="0">
+    <mat-error *ngIf="financialForm.get('nominalPengeluaran')?.hasError('required')">
+      Nominal pengeluaran wajib diisi
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Deskripsi</mat-label>
+    <textarea matInput formControlName="deskripsi" placeholder="Deskripsi"></textarea>
+    <mat-error *ngIf="financialForm.get('deskripsi')?.hasError('required')">
+      Deskripsi wajib diisi
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Tanggal</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="tanggal" placeholder="Pilih tanggal">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="financialForm.get('tanggal')?.hasError('required')">
+      Tanggal wajib diisi
+    </mat-error>
+  </mat-form-field>
+
+  <div class="dialog-actions">
+    <button mat-button type="button" (click)="onCancel()">Batal</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!financialForm.valid">Simpan</button>
+  </div>
+</form>

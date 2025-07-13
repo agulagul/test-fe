@@ -1,0 +1,197 @@
+<!-- <div class="property-detail">
+  <button class="gradient-button" (click)="goBack()">
+      <span class="button-text">Kembali</span>
+  </button>
+
+  <div class="property-detail-header" style="margin-top: 15px;">
+    <h2>[Nama properti]</h2>
+    <p>[Kecamatan/ kota properti]</p>
+  </div>
+
+  <div class="ImgGallery">
+    <img class="firstImg" *ngFor="let item of images | slice:0:1" src="{{item.src}}" alt="">
+    <div class="firstImg">
+      <mat-grid-list cols="2" rowHeight="2:1">
+          <mat-grid-tile *ngFor="let item of images | slice:1:5" class="PlainImg" >
+          <img src="{{item.src}}" alt="">
+        </mat-grid-tile>
+    </mat-grid-list>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div
+      class="tab"
+      [class.active]="selectedTab == 'info'"
+      (click)="changeTab('info')"
+    >Info Umum</div>
+    <div
+      class="tab"
+      [class.active]="selectedTab == 'fasilitas'"
+      (click)="changeTab('fasilitas')"
+    >Fasilitas Bersama</div>
+    <div
+      class="tab"
+      [class.active]="selectedTab == 'kebijakan'"
+      (click)="changeTab('kebijakan')"
+    >Kebijakan</div>
+    <div
+      class="tab"
+      [class.active]="selectedTab == 'kamar'"
+      (click)="changeTab('kamar')"
+    >Kamar</div>
+  </div>
+
+  <div *ngIf="selectedTab == 'info'" class="tab-content">
+    <div>
+      <h3>Deskripsi</h3>
+      <div class="deskripsi-box">
+        <p>
+          De Home Villa (Entertainment) menawarkan akomodasi di Bandung dan
+          berjarak 3,8 km dari Farmhouse Susu Lembang. Properti ini memiliki
+          WiFi dan layanan streaming. <br />
+          Kamar tidur dilengkapi dengan tempat tidur yang nyaman. Shower hangat
+          dan dingin tersedia di kamar mandi. <br />
+          Tamu dapat menikmati makanan di Roemah Kajoe Resto & Villa. Pilihan
+          tempat makan lain juga tersedia di sekitar properti. <br />
+          Fasilitas lain yang tersedia di De Home Villa (Entertainment) adalah
+          dapur dan lemari es. <br />
+          Bandara terdekat adalah Bandara Udara Internasional Huse
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content" *ngIf="selectedTab == 'fasilitas'">
+    <div class="fasilitas-header">
+      <h2>Fasilitas yang Tersedia</h2>
+      <button class="button-primary">tambahkan</button>
+    </div>
+
+  </div>
+
+  <div class="tab-content" *ngIf="selectedTab == 'kamar'">
+    <div class="fasilitas-header">
+      <h2>Daftar Kamar</h2>
+      <button class="button-primary">tambahkan</button>
+    </div>
+    <div class="fasilitas-header">
+      <div>
+        <button (click)="goToRoomDetails(listprop.id)" class="propObj" *ngFor="let listprop of roomDetailDataTable">
+          <img class="listImg" src="{{listprop.propimage}}" alt="">
+          <h2>{{listprop.roomName}}</h2>
+          <h4>{{listprop.price}}</h4>
+          <h4>Lihat detail</h4>
+          <div>
+            {{listprop.status}}
+          </div>
+          </button>
+      </div>
+    </div>
+
+  </div>
+ -->
+
+ <div class="property-detail">
+  <button class="gradient-button" (click)="goBack()">
+    <span class="button-text">Kembali</span>
+  </button>
+
+  <div class="property-detail-header" style="margin-top: 15px;">
+    <h2>{{ propertyDetail?.property_name || '-' }}</h2>
+    <p>{{ propertyDetail?.address || '-' }}{{ propertyDetail?.city ? ', ' + propertyDetail.city : '' }}</p>
+  </div>
+
+  <!-- Responsive Image Gallery (carousel + grid + modal, sama seperti room-detail) -->
+  <div class="image-container-complete">
+    <div class="carousel-container" *ngIf="images.length > 0">
+      <div class="carousel-wrapper" [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
+        <div class="carousel-slide" *ngFor="let img of images">
+          <img [src]="img" (click)="openModal(img)" alt="Carousel image" />
+        </div>
+      </div>
+      <button class="nav prev" (click)="prev()">‹</button>
+      <button class="nav next" (click)="next()">›</button>
+    </div>
+    <div class="gallery-container" *ngIf="images.length > 1">
+      <div class="gallery-grid">
+        <img *ngFor="let img of images" [src]="img" (click)="openModal(img)" alt="Room image" class="gallery-img" />
+      </div>
+    </div>
+    <div class="modal" *ngIf="selectedImage" (click)="closeModal()">
+      <img [src]="selectedImage" class="modal-img" alt=""/>
+    </div>
+    <div class="add-photo-btn-wrapper">
+      <button class="gradient-button" *ngIf="userRole === 'pemilik'" (click)="openAddPropertyPhotoDialog()">
+        <span class="button-text">Tambahkan Foto</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab" [class.active]="selectedTab == 'info'" (click)="changeTab('info')">
+      Info Umum
+    </div>
+    <div class="tab" [class.active]="selectedTab == 'fasilitas'" (click)="changeTab('fasilitas')">
+      Fasilitas Bersama
+    </div>
+    <div class="tab" [class.active]="selectedTab == 'kamar'" (click)="changeTab('kamar')">
+      Kamar
+    </div>
+  </div>
+
+  <div *ngIf="selectedTab == 'info'" class="tab-content">
+    <div>
+      <h3>Deskripsi</h3>
+      <div class="deskripsi-box">
+        <p>
+          {{ propertyDetail?.description || '-' }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content" *ngIf="selectedTab == 'fasilitas'">
+    <div class="property-tab-header">
+      <h2>Fasilitas yang Tersedia</h2>
+      <button class="gradient-button" *ngIf="userRole === 'pemilik'" (click)="openAddFacilityDialog()">
+        <span class="button-text">Tambahkan</span>
+      </button>
+    </div>
+    <div class="facility-list-display" *ngIf="propertyDetail?.facilities && propertyDetail.facilities.length > 0">
+      <div *ngFor="let category of getFacilityCategories(propertyDetail.facilities)">
+        <h4 class="facility-category">{{ category.category }}</h4>
+        <ul class="facility-list">
+          <li *ngFor="let item of category.items">
+            {{ item.facility_name }}<span *ngIf="item.quantity"> ({{item.quantity}})</span><span *ngIf="item.notes"> - {{item.notes}}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div *ngIf="!propertyDetail?.facilities || propertyDetail.facilities.length === 0" class="facility-list-empty">
+      <em>Belum ada fasilitas terdaftar.</em>
+    </div>
+  </div>
+
+  <div class="tab-content" *ngIf="selectedTab == 'kamar'">
+    <div class="property-tab-header">
+      <h2>Daftar Kamar</h2>
+      <button class="gradient-button" *ngIf="userRole === 'pemilik'" (click)="goToAddUnit()">
+        <span class="button-text">Tambahkan</span>
+      </button>
+    </div>
+    <div class="fasilitas-header">
+      <div>
+        <button (click)="goToRoomDetails(listprop.id)" class="propObj" *ngFor="let listprop of units">
+          <img class="listImg" src="{{listprop.propimage}}" alt="">
+          <h2>{{listprop.roomName}}</h2>
+          <h4>Rp {{listprop.price | number}}</h4>
+          <div [ngClass]="listprop.status == 1? 'roomReady' : 'roomNot'">
+            {{listprop.status == 1? 'Tersedia' : 'Tidak tersedia'}}
+          </div>
+        </button>
+      </div>
+    </div>
+
+</div>

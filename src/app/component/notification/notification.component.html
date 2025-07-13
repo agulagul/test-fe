@@ -1,0 +1,14 @@
+<div class="notification-container">
+  <h1 class="notification-header">Notifikasi</h1>
+
+  <div class="notification-list">
+    <div class="notification-item" *ngFor="let notification of notifications">
+      <h2 class="notification-title">{{notification.title}}</h2>
+      <div class="notification-content">{{notification.content}}</div>
+      <ng-container *ngIf="notification.title === 'APPROVAL-BOOKING'">
+        <button mat-raised-button color="primary" (click)="onApproveBooking(notification)">Approval Booking</button>
+      </ng-container>
+      <div class="notification-divider"></div>
+    </div>
+  </div>
+</div>

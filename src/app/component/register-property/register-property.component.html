@@ -1,0 +1,109 @@
+<div class="registration-container">
+
+  <div class="register-header">
+    <button class="gradient-button" (click)="goBack()">
+      <span class="button-text">Kembali</span>
+    </button>
+    <h1 class="registration-title">Registrasi properti</h1>
+  </div>
+
+  <div class="registration-card">
+
+    <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+      <div class="form-section">
+        <h2 class="section-title">Informasi Properti</h2>
+
+        <div class="form-group">
+          <label for="propertyName">Nama Properti</label>
+          <input id="propertyName" type="text" formControlName="propertyName"
+                 placeholder="Masukkan nama properti">
+          <div *ngIf="propertyForm.get('propertyName')?.invalid && propertyForm.get('propertyName')?.touched"
+               class="error-message">
+            Nama properti wajib diisi
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="JenisProperti">Jenis Properti</label>
+          <mat-select id="JenisProperti" formControlName="JenisProperti" placeholder="Pilih jenis properti">
+            <mat-option value="" disabled>Pilih jenis properti</mat-option>
+            <mat-option *ngFor="let type of propertyTypes" [value]="type.value">{{ type.label }}</mat-option>
+          </mat-select>
+          <div *ngIf="propertyForm.get('JenisProperti')?.invalid && propertyForm.get('JenisProperti')?.touched"
+               class="error-message">
+            Jenis properti wajib dipilih
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="Deskripsi">Deskripsi</label>
+          <textarea id="Deskripsi" formControlName="Deskripsi" rows="4" placeholder="Masukkan deskripsi properti"></textarea>
+          <div *ngIf="propertyForm.get('Deskripsi')?.invalid && propertyForm.get('Deskripsi')?.touched"
+               class="error-message">
+            Deskripsi wajib diisi
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="LatLong">Lokasi Properti</label>
+          <div>
+
+          </div>
+          <app-map-popup (locationSelected)="onLocationSelected($event)"></app-map-popup>
+
+          <!-- <div *ngIf="selectedLocation" class="location-info">
+            <h3>Selected Location</h3>
+            <p>Latitude: {{ selectedLocation.lat | number:'1.4-4' }}</p>
+            <p>Longitude: {{ selectedLocation.lng | number:'1.4-4' }}</p>
+          </div> -->
+          <div *ngIf="propertyForm.get('LatLong')?.invalid && propertyForm.get('LatLong')?.touched"
+               class="error-message">
+            Lokasi Properti wajib diisi
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="propertyAddress">Alamat Detail Properti</label>
+          <textarea id="propertyAddress" formControlName="propertyAddress"
+                    placeholder="Masukkan alamat detail properti" rows="3"></textarea>
+          <div *ngIf="propertyForm.get('propertyAddress')?.invalid && propertyForm.get('propertyAddress')?.touched"
+               class="error-message">
+            Alamat detail properti wajib diisi
+          </div>
+        </div>
+
+
+
+      </div>
+
+      <div class="form-section">
+        <h2 class="section-title">Property Photo</h2>
+
+        <div class="file-upload-container">
+          <div class="file-drop-area"
+               [class.dragover]="isDragging"
+               (drop)="onFileDrop($event)"
+               (dragover)="onDragOver($event)"
+               (dragleave)="onDragLeave()">
+            <input type="file" id="propertyPhoto" (change)="onFileSelected($event)" accept="image/*" hidden>
+            <label for="propertyPhoto" class="upload-label">
+              <mat-icon class="upload-icon">cloud_upload</mat-icon>
+              <span *ngIf="!selectedFile">Drag & drop photo here or click to browse</span>
+              <span *ngIf="selectedFile" class="file-name">{{selectedFile.name}}</span>
+            </label>
+          </div>
+          <div *ngIf="selectedFile" class="image-preview">
+            <img [src]="imagePreview" alt="Property preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="cancel-btn" (click)="onCancel()">Cancel</button>
+        <button type="submit" class="submit-btn" [disabled]="propertyForm.invalid || !selectedFile">
+          Register Property
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
