@@ -389,6 +389,13 @@ button {
   border-radius: 10px;
 }
 
+.gradient-button + .gradient-button {
+  margin-left: 12px;
+}
+.property-detail-header {
+  margin-top: 15px;
+}
+
 @media (max-width: 850px) {
   .carousel-slide img {
     height: 400px;

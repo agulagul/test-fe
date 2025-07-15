@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { landingPropertyData } from '../landing-page/landing-page.component';
 import { PropertyService } from '../../service/property.service';
 import { AlertService } from '../../service/alert.service';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-property-list',
@@ -14,13 +15,19 @@ import { AlertService } from '../../service/alert.service';
 })
 export class PropertyListComponent {
   PropListData : landingPropertyData[] = [];
+  isPemilik: boolean = false;
 
   constructor(
     private location: Location,
     private PropService : PropertyService,
     private router: Router,
-    private alertService: AlertService
-  ){}
+    private alertService: AlertService,
+    private authService: AuthService
+  ){
+    this.authService.user$.subscribe(user => {
+      this.isPemilik = user && user.role_id === 2;
+    });
+  }
 
   goBack(): void {
     this.location.back();
@@ -32,6 +39,10 @@ export class PropertyListComponent {
 
   goToEdit(id: any) {
     this.router.navigate(['/edit-property', id]);
+  }
+
+  goToRegisterProperty() {
+    this.router.navigate(['/register-property']);
   }
 
   ngOnInit(){

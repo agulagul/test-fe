@@ -8,6 +8,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -61,6 +62,8 @@ import { EditPropertyComponent } from './component/edit-property/edit-property.c
 import { AddFinancialDialogComponent } from './component/statistic-page/add-financial-dialog.component';
 import { AddFacilityDialogComponent } from './component/pop-up/add-facility-dialog/add-facility-dialog.component';
 import { UsePointDialogComponent } from './component/payment-page/use-point-dialog.component';
+import { AddNotificationDialogComponent } from './component/pop-up/add-notification-dialog.component';
+import { ConfirmDeleteDialog } from './component/pop-up/confirm-delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -119,8 +122,11 @@ import { UsePointDialogComponent } from './component/payment-page/use-point-dial
     MatNativeDateModule,
     MatTableModule,
     MatMenuModule,
+    MatProgressSpinnerModule,
     AddFacilityDialogComponent,
-    UsePointDialogComponent
+    UsePointDialogComponent,
+    AddNotificationDialogComponent,
+    ConfirmDeleteDialog
   ],
   providers: [
     provideHttpClient(),

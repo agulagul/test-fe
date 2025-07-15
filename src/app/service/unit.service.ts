@@ -17,6 +17,14 @@ export class UnitService {
     return this.http.post(`${environment.apiUrl}/unit`, data);
   }
 
+  updateUnit(id: any, data: any): Observable<any> {
+    return this.http.put(`${environment.apiUrl}/unit/${id}`, data);
+  }
+
+  deleteUnit(id: number): Observable<any> {
+    return this.http.delete(`${environment.apiUrl}/unit/${id}`);
+  }
+
   generateUnitLink(unitId: string | number) {
     return this.http.get(`${environment.apiUrl}/unit/generateLink/${unitId}`);
   }

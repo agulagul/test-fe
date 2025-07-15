@@ -29,6 +29,8 @@ export class LandingPageComponent {
 
   searchText: string = '';
 
+  isLoading: boolean = false;
+
   constructor(
     private route: Router,
     private propertyService: PropertyService,
@@ -38,6 +40,7 @@ export class LandingPageComponent {
   }
 
   ngOnInit(){
+    this.isLoading = true;
     this.propertyService.getAllProperties().subscribe((response: any) => {
       if (response && response.success && Array.isArray(response.data)) {
         this.landingProperties = response.data.map((p: any) => ({
@@ -50,7 +53,9 @@ export class LandingPageComponent {
           rating: 0 // No rating in PropertyDTO, set as needed
         }));
       }
+      this.isLoading = false;
     }, (error) => {
+      this.isLoading = false;
     });
   }
 

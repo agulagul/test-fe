@@ -49,5 +49,8 @@
     <ng-template #emptyState>
       <div class="empty-message">Belum ada properti yang terdaftar.</div>
     </ng-template>
+    <button class="gradient-button add-property-btn" *ngIf="isPemilik" (click)="goToRegisterProperty()">
+      <span class="button-text">Tambah Properti</span>
+    </button>
   </div>
 </div>

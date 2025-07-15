@@ -1,6 +1,8 @@
 <div class="container">
   <div class="header">
-    <button (click)="goBack()" class="back-button">←</button>
+    <button class="gradient-button" (click)="goBack()">
+      <span class="button-text">Kembali</span>
+    </button>
     <h2>{{ unitDetail?.unit_name || '-' }}</h2>
   </div>
 
@@ -39,6 +41,11 @@
       <button (click)="GamificationPopUp()" class="share-button">Sebarkan Unit</button>
       <button class="book-button" (click)="openBookingDialog()">Mulai Booking</button>
     </div>
+    <!-- Button for owner to edit unit -->
+    <div class="button-list" *ngIf="isPemilikKos">
+      <button class="edit-unit-btn" (click)="openEditUnitDialog()">Edit Unit</button>
+      <button class="delete-unit-btn" (click)="deleteUnit()">Hapus Unit</button>
+    </div>
 
     <div class="overall-grid">
       <div class="details-grid">
@@ -74,11 +81,11 @@
     <div class="contacts">
       <h4>Kontak</h4>
       <div class="contact-list">
-        <div class="contact-item" *ngFor="let contact of contacts">
-        <img class="waImg" src="../../../assets/images/whatsapp-logo.svg" alt="">
-        <p>{{ contact.name }}<br>{{ contact.phone }}</p>
-        <img class="waImg" src="../../../assets/images/paste-icon.svg" alt="">
-      </div>
+        <div class="contact-item" *ngFor="let contact of unitDetail?.contacts">
+          <img class="waImg" src="../../../assets/images/whatsapp-logo.svg" alt="">
+          <p>{{ contact.name }}<br>{{ contact.phone }}</p>
+          <img class="waImg" src="../../../assets/images/paste-icon.svg" alt="">
+        </div>
       </div>
     </div>
   </div>

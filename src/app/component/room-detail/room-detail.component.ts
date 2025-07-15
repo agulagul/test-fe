@@ -45,6 +45,7 @@ export class RoomDetailComponent implements OnInit {
   selectedImage: string | null = null;
   generatedLink: string | null = null;
   isPenghuni: boolean = false;
+  isPemilikKos: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -61,6 +62,7 @@ export class RoomDetailComponent implements OnInit {
   ) {
     this.authService.user$.subscribe(user => {
       this.isPenghuni = user && user.role_id === 4;
+      this.isPemilikKos = user && user.role_id === 2; // 2 = pemilik kos
     });
     this.RoomId = this.activatedRoute.snapshot.paramMap.get('id');
   }
@@ -134,6 +136,11 @@ export class RoomDetailComponent implements OnInit {
     });
   }
 
+  openEditUnitDialog() {
+    if (!this.unitDetail?.id) return;
+    this.route.navigate(['/edit-unit', this.unitDetail.id]);
+  }
+
   getFacilityCategories(facilities: any[]): { category: string, items: any[] }[] {
     if (!facilities) return [];
     const map = new Map<string, any[]>();
@@ -156,6 +163,20 @@ export class RoomDetailComponent implements OnInit {
       case 'VENTILASI': return '🪟';
       default: return '🏷️';
     }
+  }
+
+  deleteUnit() {
+    if (!this.unitDetail?.id) return;
+    if (!confirm('Yakin ingin menghapus unit ini?')) return;
+    this.unitService.deleteUnit(this.unitDetail.id).subscribe({
+      next: (res: any) => {
+        this.alertService.success('Unit berhasil dihapus!');
+        this.route.navigate(['/property-list']);
+      },
+      error: (err) => {
+        this.alertService.error('Gagal menghapus unit');
+      }
+    });
   }
 
 }

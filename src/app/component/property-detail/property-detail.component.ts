@@ -49,7 +49,7 @@ export class PropertyDetailComponent implements OnInit{
   constructor( private activatedRoute: ActivatedRoute, private route: Router, private location: Location, private propertyService: PropertyService, private authService: AuthService, private dialog: MatDialog, private http: HttpClient, private cloudinaryService: CloudinaryService, private snackBar: MatSnackBar, private alertService: AlertService) {
     this.PropertyId = this.activatedRoute.snapshot.paramMap.get('id');
     this.authService.user$.subscribe(user => {
-      this.userRole = user && user.role_id === 2 ? 'pemilik' : '';
+      this.userRole = user && user.role_id === 2 ? 'pemilik' : (user && user.role_id === 3 ? 'penjaga' : '');
     });
   }
 
@@ -211,5 +211,17 @@ export class PropertyDetailComponent implements OnInit{
 
   closeModal() {
     this.selectedImage = null;
+  }
+
+  applyAsKeeper() {
+    if (!this.PropertyId) return;
+    this.propertyService.applyKeeper(this.PropertyId).subscribe({
+      next: (res) => {
+        this.alertService.success((res as any)?.message || 'Pengajuan sebagai penjaga telah dikirim!');
+      },
+      error: (err) => {
+        this.alertService.error((err?.error as any)?.message || 'Gagal mengajukan sebagai penjaga.');
+      }
+    });
   }
 }

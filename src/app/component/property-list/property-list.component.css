@@ -245,3 +245,11 @@ button {
   font-size: 1.1rem;
   text-align: center;
 }
+
+.flex-row-center .gradient-button + .gradient-button {
+  margin-left: 16px;
+}
+
+.gradient-button.add-property-btn {
+  margin-top: 24px;
+}

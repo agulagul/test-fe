@@ -25,6 +25,7 @@ import { UserProfileComponent } from './component/user-profile/user-profile.comp
 import { MidtransFinishComponent } from './component/payment-page/midtrans-finish.component';
 import { MidtransErrorComponent } from './component/payment-page/midtrans-error.component';
 import { EditPropertyComponent } from './component/edit-property/edit-property.component';
+import { EditUnitComponent } from './component/edit-unit/edit-unit.component';
 
 const routes: Routes = [
   {
@@ -98,6 +99,9 @@ const routes: Routes = [
   },
   {
     path: 'edit-property/:id', component: EditPropertyComponent
+  },
+  {
+    path: 'edit-unit/:id', component: EditUnitComponent
   },
   {
     path: 'reset-password',

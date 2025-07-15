@@ -36,4 +36,12 @@ export class PropertyService {
   updateProperty(id: any, data: any): Observable<any> {
     return this.http.put(`${environment.apiUrl}/property/${id}`, data);
   }
+
+  applyKeeper(propertyId: number): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/property/${propertyId}/apply-keeper`, {});
+  }
+
+  approveKeeper(keeperId: number, decision: string, remarks: string = ''): Observable<any> {
+    return this.http.put(`${environment.apiUrl}/property/keeper/${keeperId}/approval`, { decision, remarks });
+  }
 }
